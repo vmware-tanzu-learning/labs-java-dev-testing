@@ -28,7 +28,7 @@ jobs:
       - name: Install VS Code extensions
         shell: bash
         run: |
-          ./code-server/code-server --install-extension vscjava.vscode-java-pack@0.25.8
+          ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack@0.25.8
 
       - name: Republish VS Code extensions
         shell: bash

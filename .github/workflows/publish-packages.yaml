@@ -33,4 +33,9 @@ jobs:
       - name: Republish VS Code extensions
         shell: bash
         run: |
-          ls -las $HOME/.local/share/code-server/extensions/
+          rm -f $HOME/.local/share/code-server/extensions/extensions.json
+          imgpkg push \
+            -i ghcr.io/${{github.repository_owner}}/vscode-java-extensions:latest \
+            -f $HOME/.local/share/code-server/extensions \
+            --registry-username=${{github.actor}} \
+            --registry-password=${{secrets.GITHUB_TOKEN}}

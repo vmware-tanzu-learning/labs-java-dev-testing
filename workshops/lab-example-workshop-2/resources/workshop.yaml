@@ -1,0 +1,37 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: "lab-example-workshop-2"
+spec:
+  title: "Java Workshop #2"
+  description: "Install Java extensions from GitHub"
+  workshop:
+    image: jdk17-environment:*
+    files:
+    - image:
+        url: "$(image_repository)/labs-java-dev-testing-files:latest"
+      includePaths:
+      - /workshops/lab-example-workshop-2/workshop/**
+      - /workshops/lab-example-workshop-2/exercises/**
+      - /workshops/lab-example-workshop-2/README.md
+      newRootPath: workshops/lab-example-workshop-2
+    - path: .local/share/code-server/extensions
+      image:
+        url: ghcr.io/grahamdumpleton/vscode-java-extensions-files:latest
+  session:
+    namespaces:
+      budget: medium
+    applications:
+      terminal:
+        enabled: true
+        layout: split
+      editor:
+        enabled: true
+      console:
+        enabled: false
+      docker:
+        enabled: false
+      registry:
+        enabled: false
+      vcluster:
+        enabled: false

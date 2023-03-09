@@ -29,14 +29,26 @@ jobs:
         shell: bash
         run: |
           ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack@0.25.8
+          rm -f $HOME/.local/share/code-server/extensions/extensions.json
 
-      - name: Republish VS Code extensions
+      - name: Publish VS Code extensions as files
         shell: bash
         run: |
-          rm -f $HOME/.local/share/code-server/extensions/extensions.json
           REPOSITORY_OWNER=${{github.repository_owner}}
           imgpkg push \
-            -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions:latest \
+            -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions-files:latest \
             -f $HOME/.local/share/code-server/extensions \
+            --registry-username=${{github.actor}} \
+            --registry-password=${{secrets.GITHUB_TOKEN}}
+
+      - name: Publish VS Code extensions as tarball
+        shell: bash
+        run: |
+          REPOSITORY_OWNER=${{github.repository_owner}}
+          mkdir /tmp/files
+          tar cvfz /tmp/files/extensions.tar.gz $HOME/.local/share/code-server/extensions
+          imgpkg push \
+            -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions-tar:latest \
+            -f /tmp/files \
             --registry-username=${{github.actor}} \
             --registry-password=${{secrets.GITHUB_TOKEN}}

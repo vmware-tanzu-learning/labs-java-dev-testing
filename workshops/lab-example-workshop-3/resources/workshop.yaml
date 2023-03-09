@@ -1,0 +1,43 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: "lab-example-workshop-3"
+spec:
+  title: "Java Workshop #3"
+  description: "Install Java extensions from local assets repository."
+  workshop:
+    image: jdk17-environment:*
+    files:
+    - image:
+        url: "$(image_repository)/labs-java-dev-testing-files:latest"
+      includePaths:
+      - /workshops/lab-example-workshop-3/workshop/**
+      - /workshops/lab-example-workshop-3/exercises/**
+      - /workshops/lab-example-workshop-3/README.md
+      newRootPath: workshops/lab-example-workshop-3
+    - path: .local/share/code-server/extensions
+      http:
+        url: http://$(workshop_namespace)-assets:8080/extensions.tar.gz
+  session:
+    namespaces:
+      budget: medium
+    applications:
+      terminal:
+        enabled: true
+        layout: split
+      editor:
+        enabled: true
+      console:
+        enabled: false
+      docker:
+        enabled: false
+      registry:
+        enabled: false
+      vcluster:
+        enabled: false
+  environment:
+    assets:
+      files: 
+      - path: .local/share/code-server/extensions
+        image:
+          url: ghcr.io/grahamdumpleton/vscode-java-extensions-tar:latest

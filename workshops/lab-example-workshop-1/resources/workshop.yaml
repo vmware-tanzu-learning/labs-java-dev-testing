@@ -1,0 +1,34 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: "lab-example-workshop-1"
+spec:
+  title: "Java Workshop #1"
+  description: "Directly install Java extensions"
+  workshop:
+    image: jdk17-environment:*
+    files:
+    - image:
+        url: "$(image_repository)/labs-java-dev-testing-files:latest"
+      includePaths:
+      - /workshops/lab-example-workshop-1/workshop/**
+      - /workshops/lab-example-workshop-1/exercises/**
+      - /workshops/lab-example-workshop-1/README.md
+      newRootPath: workshops/lab-example-workshop-1
+  session:
+    namespaces:
+      budget: medium
+    applications:
+      terminal:
+        enabled: true
+        layout: split
+      editor:
+        enabled: true
+      console:
+        enabled: false
+      docker:
+        enabled: false
+      registry:
+        enabled: false
+      vcluster:
+        enabled: false

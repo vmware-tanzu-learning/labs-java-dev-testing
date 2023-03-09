@@ -4,7 +4,7 @@ metadata:
   name: "lab-example-workshop-3"
 spec:
   title: "Java Workshop #3"
-  description: "Install Java extensions from local assets repository."
+  description: "Install Java extensions from local web server."
   workshop:
     image: jdk17-environment:*
     files:

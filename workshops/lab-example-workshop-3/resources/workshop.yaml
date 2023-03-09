@@ -17,7 +17,7 @@ spec:
       newRootPath: workshops/lab-example-workshop-3
     - path: .local/share/code-server/extensions
       http:
-        url: http://$(workshop_namespace)-assets:8080/extensions.tar.gz
+        url: "$(assets_repository)/extensions.tar.gz"
   session:
     namespaces:
       budget: medium
@@ -38,6 +38,5 @@ spec:
   environment:
     assets:
       files: 
-      - path: .local/share/code-server/extensions
-        image:
+      - image:
           url: ghcr.io/grahamdumpleton/vscode-java-extensions-tar:latest

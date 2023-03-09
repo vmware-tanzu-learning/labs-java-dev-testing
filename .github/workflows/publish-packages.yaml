@@ -46,7 +46,8 @@ jobs:
         run: |
           REPOSITORY_OWNER=${{github.repository_owner}}
           mkdir /tmp/files
-          tar cvfz /tmp/files/extensions.tar.gz $HOME/.local/share/code-server/extensions
+          cd $HOME/.local/share/code-server/extensions
+          tar cvfz /tmp/files/extensions.tar.gz .
           imgpkg push \
             -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions-tar:latest \
             -f /tmp/files \

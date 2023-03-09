@@ -18,6 +18,11 @@ spec:
     - path: .local/share/code-server/extensions
       http:
         url: "$(assets_repository)/extensions.tar.gz"
+  environment:
+    assets:
+      files: 
+      - image:
+          url: ghcr.io/grahamdumpleton/vscode-java-extensions-tar:latest
   session:
     namespaces:
       budget: medium
@@ -35,8 +40,3 @@ spec:
         enabled: false
       vcluster:
         enabled: false
-  environment:
-    assets:
-      files: 
-      - image:
-          url: ghcr.io/grahamdumpleton/vscode-java-extensions-tar:latest

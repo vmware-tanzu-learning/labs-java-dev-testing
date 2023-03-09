@@ -34,8 +34,9 @@ jobs:
         shell: bash
         run: |
           rm -f $HOME/.local/share/code-server/extensions/extensions.json
+          REPOSITORY_OWNER=${{github.repository_owner}}
           imgpkg push \
-            -i ghcr.io/${{github.repository_owner}}/vscode-java-extensions:latest \
+            -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions:latest \
             -f $HOME/.local/share/code-server/extensions \
             --registry-username=${{github.actor}} \
             --registry-password=${{secrets.GITHUB_TOKEN}}

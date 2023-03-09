@@ -10,27 +10,27 @@ jobs:
     name: Java Extensions
     runs-on: ubuntu-latest
 
-  steps:
-    - name: Check out the repository
-      uses: actions/checkout@v3
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
 
-    - name: Install Carvel tools
-      shell: bash
-      run: curl -L https://carvel.dev/install.sh | bash
+      - name: Install Carvel tools
+        shell: bash
+        run: curl -L https://carvel.dev/install.sh | bash
 
-    - name: Install code-server
-      shell: bash
-      run: |
-        curl --fail -L -o code-server.tar.gz https://github.com/coder/code-server/releases/download/v4.10.1/code-server-4.10.1-linux-amd64.tar.gz
-        mkdir code-server
-        tar -C code-server --strip-components 1 -xvf code-server.tar.gz
+      - name: Install code-server
+        shell: bash
+        run: |
+          curl --fail -L -o code-server.tar.gz https://github.com/coder/code-server/releases/download/v4.10.1/code-server-4.10.1-linux-amd64.tar.gz
+          mkdir code-server
+          tar -C code-server --strip-components 1 -xvf code-server.tar.gz
 
-    - name: Install VS Code extensions
-      shell: bash
-      run: |
-        ./code-server/code-server --install-extension vscjava.vscode-java-pack@0.25.8
+      - name: Install VS Code extensions
+        shell: bash
+        run: |
+          ./code-server/code-server --install-extension vscjava.vscode-java-pack@0.25.8
 
-    - name: Republish VS Code extensions
-      shell: bash
-      run: |
-        ls -las $HOME/.local/share/code-server/extensions/
+      - name: Republish VS Code extensions
+        shell: bash
+        run: |
+          ls -las $HOME/.local/share/code-server/extensions/

@@ -17,9 +17,12 @@ spec:
       newRootPath: workshops/lab-example-workshop-3
     - path: .local/share/code-server/extensions
       http:
-        url: "$(assets_repository)/extensions.tar.gz"
+        url: "http://$(assets_repository)/extensions.tar.gz"
   environment:
     assets:
+      storage: 5Gi
+      ingress:
+        enabled: true
       files: 
       - image:
           url: ghcr.io/grahamdumpleton/vscode-java-extensions-tar:latest
@@ -40,3 +43,6 @@ spec:
         enabled: false
       vcluster:
         enabled: false
+    ingresses:
+    - name: assets
+      host: $(assets_repository)

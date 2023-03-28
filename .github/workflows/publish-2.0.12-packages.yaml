@@ -26,26 +26,12 @@ jobs:
           sudo tar -C /opt/editor --strip-components 1 -xvf code-server.tar.gz
           rm code-server.tar.gz
 
-      - name: make eduk8s user
-        shell: bash
-        run: |
-          sudo useradd -m eduk8s
-          sudo chown -R eduk8s:root /opt/editor
-
-      - name: install vs code extensions
-        shell: bash
-        run: |
-          /opt/editor/bin/code-server --install-extension vscjava.vscode-java-pack@0.25.8
-          sudo mkdir -p /home/eduk8s/.local/share/code-server/extensions
-          sudo cp -rf $HOME/.local/share/code-server/extensions /home/eduk8s/.local/share/code-server/extensions
-          sudo rm -f /home/eduk8s/.local/share/code-server/extensions/extensions.json
-
-      - name: publish code server and extensions as files
+      - name: publish code server
         shell: bash
         run: |
           REPOSITORY_OWNER=${{github.repository_owner}}
           sudo imgpkg push \
             -i ghcr.io/${REPOSITORY_OWNER,,}/code-server-and-extensions-files:2.0.12 \
-            -f / \
+            -f /opt/editor \
             --registry-username=${{github.actor}} \
             --registry-password=${{secrets.GITHUB_TOKEN}}

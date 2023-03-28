@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-vscode-extension-overlay-package:
-    name: Java Extensions
+    name: Build VS Code Extension Overlay
     runs-on: ubuntu-latest
 
     steps:

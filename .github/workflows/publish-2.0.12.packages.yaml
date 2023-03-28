@@ -1,0 +1,53 @@
+name: Build and Publish Packages
+
+on:
+  push:
+    branches:
+    - main
+    workflow_dispatch:
+
+jobs:
+  build-vscode-extension-package:
+    name: Java Extensions
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Install Carvel tools
+        shell: bash
+        run: curl -L https://carvel.dev/install.sh | bash
+
+      - name: Install code-server
+        shell: bash
+        run: |
+          sudo mkdir /opt/editor
+          cd /tmp
+          curl --fail -L -o code-server.tar.gz https://github.com/coder/code-server/releases/download/v4.10.1/code-server-4.10.1-linux-amd64.tar.gz
+          sudo tar -C /opt/editor --strip-components 1 -xvf code-server.tar.gz
+          rm code-server.tar.gz
+
+      - name: Make eduk8s user
+        shell: bash
+        run: |
+          sudo useradd -m eduk8s
+          sudo chown -R eduk8s:root /opt/editor
+
+      - name: Install VS Code extensions
+        shell: bash
+        run: |
+          /opt/editor/bin/code-server --install-extension vscjava.vscode-java-pack@0.25.8
+          sudo mkdir -p /home/eduk8s/.local/share/code-server/extensions
+          sudo cp -rf $HOME/.local/share/code-server/extensions /home/eduk8s/.local/share/code-server/extensions
+          sudo rm -f /home/eduk8s/.local/share/code-server/extensions/extensions.json
+
+      - name: Publish VS Code extensions as files
+        shell: bash
+        run: |
+          REPOSITORY_OWNER=${{github.repository_owner}}
+          imgpkg push \
+            -i ghcr.io/${REPOSITORY_OWNER,,}/code-server-and-extentions-files:2.0.12 \
+            -f / \
+            --registry-username=${{github.actor}} \
+            --registry-password=${{secrets.GITHUB_TOKEN}}

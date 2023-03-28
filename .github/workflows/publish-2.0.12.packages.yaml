@@ -5,7 +5,7 @@ on:
     workflow_dispatch:
 
 jobs:
-  build-vscode-extension-package:
+  build-code-server-overlay-package:
     name: Java Extensions
     runs-on: ubuntu-latest
 

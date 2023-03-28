@@ -1,4 +1,4 @@
-name: Build and Publish Packages
+name: Build and Publish 2.0.12 Code Server Overlay
 
 on:
   push:

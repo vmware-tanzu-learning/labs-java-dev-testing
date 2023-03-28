@@ -1,4 +1,4 @@
-name: Build and Publish Packages
+name: Build and Publish 2.1.0 VS Code Extension Overlay
 
 on:
   push:

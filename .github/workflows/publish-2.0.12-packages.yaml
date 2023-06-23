@@ -1,8 +1,7 @@
 name: Build and Publish 2.0.12 Code Server Overlay
 
 on:
-  push:
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   build-code-server-overlay-package:

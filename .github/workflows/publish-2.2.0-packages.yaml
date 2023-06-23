@@ -1,8 +1,7 @@
-name: Build and Publish 2.1.0 VS Code Extension Overlay
+name: Build and Publish 2.2.0 VS Code Extension Overlay
 
 on:
-  push:
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   build-vscode-extension-overlay-package:
@@ -28,6 +27,10 @@ jobs:
         shell: bash
         run: |
           ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack@0.25.8
+          curl -JL -O tanzu-vscode-extension.vsix "https://vmware-tanzu-learing-installables.s3.amazonaws.com/tanzu-vscode-extension/tanzu-vscode-extension-1.0.1.vsix"
+          ./code-server/bin/code-server --install-extension tanzu-vscode-extension.vsix
+          curl -JL -O tanzu-app-accelerator.vsix "https://vmware-tanzu-learing-installables.s3.amazonaws.com/tanzu-app-accelerator/tanzu-app-accelerator-0.1.6.vsix"
+          ./code-server/bin/code-server --install-extension tanzu-app-accelerator.vsix
           rm -f $HOME/.local/share/code-server/extensions/extensions.json
 
       - name: Publish VS Code extensions as files

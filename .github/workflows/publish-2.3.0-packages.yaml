@@ -1,4 +1,4 @@
-name: Build and Publish 2.2.0 VS Code Extension Overlay
+name: Build and Publish 2.3.0 VS Code Extension Overlay
 
 on:
   workflow_dispatch:
@@ -19,14 +19,14 @@ jobs:
       - name: Install code-server
         shell: bash
         run: |
-          curl --fail -L -o code-server.tar.gz https://github.com/coder/code-server/releases/download/v4.10.1/code-server-4.10.1-linux-amd64.tar.gz
+          curl --fail -L -o code-server.tar.gz https://github.com/coder/code-server/releases/download/v4.16.0/code-server-4.16.0-linux-amd64.tar.gz
           mkdir code-server
           tar -C code-server --strip-components 1 -xvf code-server.tar.gz
 
       - name: Install VS Code extensions
         shell: bash
         run: |
-          ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack@0.25.8
+          ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack
           ./code-server/bin/code-server --install-extension vmware.tanzu-dev-tools
           ./code-server/bin/code-server --install-extension vmware.tanzu-app-accelerator
           rm -f $HOME/.local/share/code-server/extensions/extensions.json

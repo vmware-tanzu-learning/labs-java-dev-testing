@@ -1,0 +1,55 @@
+name: Build and Publish 2.2.0 VS Code Extension Overlay
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-vscode-extension-overlay-package:
+    name: Build VS Code Extension Overlay
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Install Carvel tools
+        shell: bash
+        run: curl -L https://carvel.dev/install.sh | bash
+
+      - name: Install code-server
+        shell: bash
+        run: |
+          curl --fail -L -o code-server.tar.gz https://github.com/coder/code-server/releases/download/v4.10.1/code-server-4.10.1-linux-amd64.tar.gz
+          mkdir code-server
+          tar -C code-server --strip-components 1 -xvf code-server.tar.gz
+
+      - name: Install VS Code extensions
+        shell: bash
+        run: |
+          ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack@0.25.8
+          ./code-server/bin/code-server --install-extension vmware.tanzu-dev-tools
+          ./code-server/bin/code-server --install-extension vmware.tanzu-app-accelerator
+          rm -f $HOME/.local/share/code-server/extensions/extensions.json
+
+      - name: Publish VS Code extensions as files
+        shell: bash
+        run: |
+          REPOSITORY_OWNER=${{github.repository_owner}}
+          imgpkg push \
+            -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions-files:latest \
+            -f $HOME/.local/share/code-server/extensions \
+            --registry-username=${{github.actor}} \
+            --registry-password=${{secrets.GITHUB_TOKEN}}
+
+      - name: Publish VS Code extensions as tarball
+        shell: bash
+        run: |
+          REPOSITORY_OWNER=${{github.repository_owner}}
+          mkdir /tmp/files
+          cd $HOME/.local/share/code-server/extensions
+          tar cvfz /tmp/files/extensions.tar.gz .
+          imgpkg push \
+            -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions-tar:latest \
+            -f /tmp/files \
+            --registry-username=${{github.actor}} \
+            --registry-password=${{secrets.GITHUB_TOKEN}}

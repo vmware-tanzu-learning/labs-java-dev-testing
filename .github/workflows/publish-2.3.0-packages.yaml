@@ -27,10 +27,10 @@ jobs:
         shell: bash
         run: |
           ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack
-          curl -JL --output tanzu-vscode-extension.vsix "curl -JL --output vmware.tanzu-dev-tools-1.0.6.vsix "https://drive.google.com/uc?id=1IPOzcfaTjmcp5Zfo0f3qKw9NT4l_RAjb&export=download&confirm=t&uuid=6d96c3e0-8a86-4da2-a346-4e668f060a9f"
-          ./code-server/bin/code-server --install-extension tanzu-vscode-extension.vsix
-          curl -JL --output tanzu-app-accelerator.vsix "https://drive.google.com/uc?id=18uuz43t-g2j8uUL0ri_uzwBMeabBM5l-&export=download"
-          ./code-server/bin/code-server --install-extension tanzu-app-accelerator.vsix
+          curl -JL --output vmware.tanzu-dev-tools.vsix "https://drive.google.com/uc?id=1IPOzcfaTjmcp5Zfo0f3qKw9NT4l_RAjb&export=download&confirm=t&uuid=6d96c3e0-8a86-4da2-a346-4e668f060a9f"
+          ./code-server/bin/code-server --install-extension vmware.tanzu-dev-tools.vsix
+          curl -JL --output vmware.tanzu-app-accelerator.vsix "https://drive.google.com/uc?id=18uuz43t-g2j8uUL0ri_uzwBMeabBM5l-&export=download"
+          ./code-server/bin/code-server --install-extension vmware.tanzu-app-accelerator.vsix
           rm -f $HOME/.local/share/code-server/extensions/extensions.json
 
       - name: Publish VS Code extensions as files

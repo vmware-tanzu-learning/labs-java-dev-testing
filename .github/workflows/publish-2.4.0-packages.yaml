@@ -26,17 +26,18 @@ jobs:
       - name: Install VS Code extensions
         shell: bash
         run: |
+          ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack
           # install the Tanzu Developer Tools extension
           export TANZU_DEV_TOOLS_VERSION="1.4.0"
           curl -o vmware.tanzu-dev-tools.vsix "https://vmware.gallery.vsassets.io/_apis/public/gallery/publisher/vmware/extension/tanzu-dev-tools/${TANZU_DEV_TOOLS_VERSION}/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
-          ./code-server --install-extension vmware.tanzu-dev-tools.vsix
-          rm vmware.tanzu-dev-tools.vsix
+          ./code-server/bin/code-server --install-extension vmware.tanzu-dev-tools.vsix
 
           export TANZU_ACCELERATOR_VERSION="1.0.4"
           # install the Tanzu App Accelerator extension
           curl -o vmware.tanzu-app-accelerator.vsix "https://vmware.gallery.vsassets.io/_apis/public/gallery/publisher/vmware/extension/tanzu-app-accelerator/${TANZU_ACCELERATOR_VERSION}/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
-          ./code-server --install-extension vmware.tanzu-app-accelerator.vsix
-          rm vmware.tanzu-app-accelerator.vsix
+          ./code-server/bin/code-server --install-extension vmware.tanzu-app-accelerator.vsix
+
+          rm -f $HOME/.local/share/code-server/extensions/extensions.json
 
       - name: Publish VS Code extensions as files
         shell: bash

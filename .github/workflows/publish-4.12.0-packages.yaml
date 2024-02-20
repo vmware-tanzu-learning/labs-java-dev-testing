@@ -26,7 +26,7 @@ jobs:
       - name: Install VS Code extensions
         shell: bash
         run: |
-          ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack@v0.25.11
+          ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack@0.25.11
           # downgrade the redhat java extension, even though we specify a "pack" version above, it pulls in latest
           ./code-server/bin/code-server --install-extension redhat.java@1.24.0
           # install the Tanzu Developer Tools extension

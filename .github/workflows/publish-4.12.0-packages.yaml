@@ -26,7 +26,7 @@ jobs:
       - name: Install VS Code extensions
         shell: bash
         run: |
-          ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack:0.25.12
+          ./code-server/bin/code-server --install-extension vscjava.vscode-java-pack:0.25.8
           # install the Tanzu Developer Tools extension
           export TANZU_DEV_TOOLS_VERSION="1.4.0"
           curl -o vmware.tanzu-dev-tools.vsix "https://vmware.gallery.vsassets.io/_apis/public/gallery/publisher/vmware/extension/tanzu-dev-tools/${TANZU_DEV_TOOLS_VERSION}/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"

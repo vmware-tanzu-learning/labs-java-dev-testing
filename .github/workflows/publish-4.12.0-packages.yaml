@@ -1,4 +1,4 @@
-name: Build and Publish 2.4.0 VS Code Extension Overlay
+name: Build and Publish 4.12.0 VS Code Extension Overlay
 
 on:
   workflow_dispatch:
@@ -44,7 +44,7 @@ jobs:
         run: |
           REPOSITORY_OWNER=${{github.repository_owner}}
           imgpkg push \
-            -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions-files:2.4.0 \
+            -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions-files:4.12.0-1.0.0 \
             -f $HOME/.local/share/code-server/extensions \
             --registry-username=${{github.actor}} \
             --registry-password=${{secrets.GITHUB_TOKEN}}
@@ -57,7 +57,7 @@ jobs:
           cd $HOME/.local/share/code-server/extensions
           tar cvfz /tmp/files/extensions.tar.gz .
           imgpkg push \
-            -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions-tar:2.4.0 \
+            -i ghcr.io/${REPOSITORY_OWNER,,}/vscode-java-extensions-tar:4.12.0-1.0.0 \
             -f /tmp/files \
             --registry-username=${{github.actor}} \
             --registry-password=${{secrets.GITHUB_TOKEN}}
